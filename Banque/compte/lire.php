@@ -8,7 +8,7 @@ header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 
 // Méthode autorisée
-header("Access-Control-Allow-Methods: DELETE");
+header("Access-Control-Allow-Methods: GET");
 
 // Durée de vie de la requête
 header("Access-Control-Max-Age: 3600");
@@ -16,7 +16,7 @@ header("Access-Control-Max-Age: 3600");
 // Entêtes autorisées
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
-if($_SERVER['REQUEST_METHOD'] == 'DELETE'){
+if($_SERVER['REQUEST_METHOD'] == 'GET'){
     // La bonne méthode est utilisée
 
 }else{
@@ -26,8 +26,8 @@ if($_SERVER['REQUEST_METHOD'] == 'DELETE'){
 }
 
 // On inclut les fichiers de configuration et d'accès aux données
-include_once '../config/Database.php';
-include_once '../models/User.php';
+include_once '../../config/Database.php';
+include_once '../../models/User.php';
 
 // On instancie la base de données
 $database = new Database();
@@ -36,24 +36,32 @@ $db = $database->getConnection();
 // On instancie les users
 $user = new User($db);
 
-// On récupère les données reçues
-$donnees = json_decode(file_get_contents("php://input"));
+// On récupère les données
+$stmt = $user->lire();
 
-// On vérifie qu'on a bien toutes les données
-if(!empty($donnees->id)){
+// On vérifie si on a au moins 1 user
+if($stmt->rowCount() > 0){
+    // On initialise un tableau associatif
+    $tableauUsers = [];
+    $tableauUsers['users'] = [];
 
-}
+    // On parcourt les users
+    while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+        extract($row);
 
-$user->id = $donnees->id;
+        $us = [
+            "id" => $id,
+            "nom" => $nom,
+            "prenom" => $prenom,
+            "email" => $email,
+            "password" => $password
+        ];
 
-if($user->supprimer()){
-    // Ici la suppression a fonctionné
-    // On envoie un code 200
+        $tableauUsers['users'][] = $us;
+    }
+    // On envoie le code réponse 200 OK
     http_response_code(200);
-    echo json_encode(["message" => "La suppression a été effectuée"]);
-}else{
-    // Ici la création n'a pas fonctionné
-    // On envoie un code 503
-    http_response_code(503);
-    echo json_encode(["message" => "La suppression n'a pas été effectuée"]);         
+
+    // On encode en json et on envoie
+    echo json_encode($tableauUsers);
 }

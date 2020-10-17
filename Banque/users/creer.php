@@ -8,7 +8,7 @@ header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 
 // Méthode autorisée
-header("Access-Control-Allow-Methods: PUT");
+header("Access-Control-Allow-Methods: POST");
 
 // Durée de vie de la requête
 header("Access-Control-Max-Age: 3600");
@@ -16,11 +16,11 @@ header("Access-Control-Max-Age: 3600");
 // Entêtes autorisées
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
-if($_SERVER['REQUEST_METHOD'] == 'PUT'){
+if($_SERVER['REQUEST_METHOD'] == 'POST'){
     // La bonne méthode est utilisée
 
-    include_once '../config/Database.php';
-include_once '../models/User.php';
+    include_once '../../config/Database.php';
+include_once '../../models/User.php';
 
 // On instancie la base de données
 $database = new Database();
@@ -32,25 +32,23 @@ $user = new User($db);
 // On récupère les données reçues
 $donnees = json_decode(file_get_contents("php://input"));
 
-// On vérifie qu'on a bien toutes les données
-if(!empty($donnees->id) && !empty($donnees->nom) && !empty($donnees->prenom) && !empty($donnees->email) && !empty($donnees->password)){
-// On hydrate notre objet
-$user->id = $donnees->id;
+if(!empty($donnees->nom) && !empty($donnees->prenom) && !empty($donnees->email) && !empty($donnees->password)){
+    // On hydrate notre objet
 $user->nom = $donnees->nom;
 $user->prenom = $donnees->prenom;
 $user->email = $donnees->email;
 $user->password = $donnees->password;
 
-if($user->modifier()){
-    // Ici la modification a fonctionné
-    // On envoie un code 200
-    http_response_code(200);
-    echo json_encode(["message" => "La modification a été effectuée"]);
+if($user->creer()){
+    // Ici la création a fonctionné
+    // On envoie un code 201
+    http_response_code(201);
+    echo json_encode(["message" => "L'ajout a été effectué"]);
 }else{
     // Ici la création n'a pas fonctionné
     // On envoie un code 503
     http_response_code(503);
-    echo json_encode(["message" => "La modification n'a pas été effectuée"]);         
+    echo json_encode(["message" => "L'ajout n'a pas été effectué"]);         
 }
 
 }

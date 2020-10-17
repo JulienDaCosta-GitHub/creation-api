@@ -19,34 +19,30 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
     // La bonne méthode est utilisée
 
-}else{
-    // Mauvaise méthode, on gère l'erreur
-    http_response_code(405);
-    echo json_encode(["message" => "La méthode n'est pas autorisée"]);
-}
-
-include_once '../config/Database.php';
-include_once '../models/User.php';
+    include_once '../../config/Database.php';
+include_once '../../models/Cb.php';
 
 // On instancie la base de données
 $database = new Database();
 $db = $database->getConnection();
 
-// On instancie lesusers
-$user = new User($db);
+// On instancie les cb
+$cb = new Cb($db);
 
 // On récupère les données reçues
 $donnees = json_decode(file_get_contents("php://input"));
 
-// On vérifie qu'on a bien toutes les données
-if(!empty($donnees->nom) && !empty($donnees->prenom) && !empty($donnees->email) && !empty($donnees->password)){
+if(!empty($donnees->uuid) && !empty($donnees->exp) && !empty($donnees->cryptogramme) && !empty($donnees->code) && !empty($donnees->active) && !empty($donnees->user_id) && !empty($donnees->compte_id)){
     // On hydrate notre objet
-$user->nom = $donnees->nom;
-$user->prenom = $donnees->prenom;
-$user->email = $donnees->email;
-$user->password = $donnees->password;
+$cb->uuid = $donnees->uuid;
+$cb->exp = $donnees->exp;
+$cb->cryptogramme = $donnees->cryptogramme;
+$cb->code = $donnees->code;
+$cb->active = $donnees->active;
+$cb->user_id = $donnees->user_id;
+$cb->compte_id = $donnees->compte_id;
 
-if($user->creer()){
+if($cb->creer()){
     // Ici la création a fonctionné
     // On envoie un code 201
     http_response_code(201);
@@ -57,8 +53,11 @@ if($user->creer()){
     http_response_code(503);
     echo json_encode(["message" => "L'ajout n'a pas été effectué"]);         
 }
+
+}
+
 }else{
-    // On gère l'erreur
+    // Mauvaise méthode, on gère l'erreur
     http_response_code(405);
     echo json_encode(["message" => "La méthode n'est pas autorisée"]);
 }

@@ -26,8 +26,8 @@ if($_SERVER['REQUEST_METHOD'] == 'GET'){
 }
 
 // On inclut les fichiers de configuration et d'accès aux données
-include_once '../config/Database.php';
-include_once '../models/User.php';
+include_once '../../config/Database.php';
+include_once '../../models/User.php';
 
 // On instancie la base de données
 $database = new Database();
@@ -36,32 +36,32 @@ $db = $database->getConnection();
 // On instancie les users
 $user = new User($db);
 
-$donnees = json_decode(file_get_contents("php://input"));
+// On récupère les données
+$stmt = $user->lire();
 
-    if(!empty($donnees->id)){
-        $user->id = $donnees->id;
+// On vérifie si on a au moins 1 user
+if($stmt->rowCount() > 0){
+    // On initialise un tableau associatif
+    $tableauUsers = [];
+    $tableauUsers['users'] = [];
 
-        // On récupère le user
-        $user->lireUn();
+    // On parcourt les users
+    while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+        extract($row);
 
-        // On vérifie si le user existe
-        if($user->nom != null){
+        $us = [
+            "id" => $id,
+            "nom" => $nom,
+            "prenom" => $prenom,
+            "email" => $email,
+            "password" => $password
+        ];
 
-            $us = [
-                "id" => $user->id,
-                "nom" => $user->nom,
-                "email" => $user->email,
-                "password" => $user->password
-            ];
-            // On envoie le code réponse 200 OK
-            http_response_code(200);
-
-            // On encode en json et on envoie
-            echo json_encode($us);
-        }else{
-            // 404 Not found
-            http_response_code(404);
-         
-            echo json_encode(array("message" => "L'user' n'existe pas."));
-        }
+        $tableauUsers['users'][] = $us;
     }
+    // On envoie le code réponse 200 OK
+    http_response_code(200);
+
+    // On encode en json et on envoie
+    echo json_encode($tableauUsers);
+}
