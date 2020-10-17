@@ -40,10 +40,7 @@ $donnees = json_decode(file_get_contents("php://input"));
 
 // On vérifie qu'on a bien toutes les données
 if(!empty($donnees->nom) && !empty($donnees->prenom) && !empty($donnees->email) && !empty($donnees->password)){
-
-}
-
-// On hydrate notre objet
+    // On hydrate notre objet
 $user->nom = $donnees->nom;
 $user->prenom = $donnees->prenom;
 $user->email = $donnees->email;
@@ -59,4 +56,9 @@ if($user->creer()){
     // On envoie un code 503
     http_response_code(503);
     echo json_encode(["message" => "L'ajout n'a pas été effectué"]);         
+}
+}else{
+    // On gère l'erreur
+    http_response_code(405);
+    echo json_encode(["message" => "La méthode n'est pas autorisée"]);
 }
