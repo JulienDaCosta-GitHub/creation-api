@@ -27,41 +27,42 @@ if($_SERVER['REQUEST_METHOD'] == 'GET'){
 
 // On inclut les fichiers de configuration et d'accès aux données
 include_once '../../config/Database.php';
-include_once '../../models/User.php';
+include_once '../../models/Client.php';
 
 // On instancie la base de données
 $database = new Database();
 $db = $database->getConnection();
 
 // On instancie les users
-$user = new User($db);
+$client = new Client($db);
 
 $donnees = json_decode(file_get_contents("php://input"));
 
     if(!empty($donnees->id)){
-        $user->id = $donnees->id;
+        $client->id = $donnees->id;
 
         // On récupère le user
-        $user->lireUn();
+        $client->lireUn();
 
         // On vérifie si le user existe
-        if($user->nom != null){
+        if($client->username != null){
 
-            $ustab = [
+            $clitab = [
                 "id" => $user->id,
-                "nom" => $user->nom,
-                "email" => $user->email,
-                "password" => $user->password
+                "username" => $user->username,
+                "password" => $user->password,
+                "role" => $user->role,
+                "apiKey" => $user->role
             ];
             // On envoie le code réponse 200 OK
             http_response_code(200);
 
             // On encode en json et on envoie
-            echo json_encode($ustab);
+            echo json_encode($clitab);
         }else{
             // 404 Not found
             http_response_code(404);
          
-            echo json_encode(array("message" => "L'user' n'existe pas."));
+            echo json_encode(array("message" => "Le client n'existe pas."));
         }
     }

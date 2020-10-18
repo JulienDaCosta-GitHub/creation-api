@@ -20,7 +20,7 @@ if($_SERVER['REQUEST_METHOD'] == 'PUT'){
     // La bonne méthode est utilisée
 
     include_once '../../config/Database.php';
-include_once '../../models/User.php';
+include_once '../../models/Cb.php';
 
 // On instancie la base de données
 $database = new Database();
