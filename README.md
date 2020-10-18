@@ -14,7 +14,7 @@ Inserer des informations dans la BDD : http://localhost/creation-api/banque/user
 
 Supprimer un élément de la BDD : http://localhost/creation-api/banque/user/supprimer.php en DELETE.
 
-Modifier un éléement de la BDD : http://localhost/creation-api/banque/user/modifier.php en PUT.
+Modifier un élément de la BDD : http://localhost/creation-api/banque/user/modifier.php en PUT.
 
 Nous pouvons remplacer "user" par "cb", "compte", "transaction" ou "client" en fonction de la table que l'on souhaite modifier.
 
