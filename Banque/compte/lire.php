@@ -27,41 +27,41 @@ if($_SERVER['REQUEST_METHOD'] == 'GET'){
 
 // On inclut les fichiers de configuration et d'accès aux données
 include_once '../../config/Database.php';
-include_once '../../models/User.php';
+include_once '../../models/Compte.php';
 
 // On instancie la base de données
 $database = new Database();
 $db = $database->getConnection();
 
-// On instancie les users
-$user = new User($db);
+// On instancie les comptes
+$compte = new Compte($db);
 
 // On récupère les données
-$stmt = $user->lire();
+$stmt = $compte->lire();
 
-// On vérifie si on a au moins 1 user
+// On vérifie si on a au moins 1 compte
 if($stmt->rowCount() > 0){
     // On initialise un tableau associatif
-    $tableauUsers = [];
-    $tableauUsers['users'] = [];
+    $tableauComptes = [];
+    $tableauComptes['compte'] = [];
 
-    // On parcourt les users
+    // On parcourt les compte
     while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
         extract($row);
 
         $us = [
             "id" => $id,
-            "nom" => $nom,
-            "prenom" => $prenom,
-            "email" => $email,
-            "password" => $password
+            "user_id" => $user_id,
+            "fonds" => $fonds,
+            "type" => $type,
+            "actif" => $actif
         ];
 
-        $tableauUsers['users'][] = $us;
+        $tableauCompte['compte'][] = $us;
     }
     // On envoie le code réponse 200 OK
     http_response_code(200);
 
     // On encode en json et on envoie
-    echo json_encode($tableauUsers);
+    echo json_encode($tableauCompte);
 }

@@ -27,31 +27,31 @@ if($_SERVER['REQUEST_METHOD'] == 'GET'){
 
 // On inclut les fichiers de configuration et d'accès aux données
 include_once '../../config/Database.php';
-include_once '../../models/User.php';
+include_once '../../models/Compte.php';
 
 // On instancie la base de données
 $database = new Database();
 $db = $database->getConnection();
 
-// On instancie les users
-$user = new User($db);
+// On instancie les compte
+$compte = new Compte($db);
 
 $donnees = json_decode(file_get_contents("php://input"));
 
     if(!empty($donnees->id)){
-        $user->id = $donnees->id;
+        $compte->id = $donnees->id;
 
         // On récupère le user
-        $user->lireUn();
+        $compte->lireUn();
 
-        // On vérifie si le user existe
-        if($user->nom != null){
+        // On vérifie si le compte existe
+        if($compte->compte_is!= null){
 
             $us = [
                 "id" => $user->id,
-                "nom" => $user->nom,
-                "email" => $user->email,
-                "password" => $user->password
+                "user_is" => $user->user_is,
+                "type" => $user->type,
+                "actif" => $user->actif
             ];
             // On envoie le code réponse 200 OK
             http_response_code(200);
@@ -61,7 +61,6 @@ $donnees = json_decode(file_get_contents("php://input"));
         }else{
             // 404 Not found
             http_response_code(404);
-         
-            echo json_encode(array("message" => "L'user' n'existe pas."));
+            echo json_encode(array("message" => "Le 'compte' n'existe pas."));
         }
     }
