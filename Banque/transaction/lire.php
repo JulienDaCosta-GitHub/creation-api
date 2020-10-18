@@ -27,25 +27,25 @@ if($_SERVER['REQUEST_METHOD'] == 'GET'){
 
 // On inclut les fichiers de configuration et d'accès aux données
 include_once '../../config/Database.php';
-include_once '../../models/User.php';
+include_once '../../models/Transaction.php';
 
 // On instancie la base de données
 $database = new Database();
 $db = $database->getConnection();
 
-// On instancie les users
-$user = new User($db);
+// On instancie les transactions
+$transaction = new Transaction($db);
 
 // On récupère les données
-$stmt = $user->lire();
+$stmt = $transaction->lire();
 
-// On vérifie si on a au moins 1 user
+// On vérifie si on a au moins 1 Transaction
 if($stmt->rowCount() > 0){
     // On initialise un tableau associatif
-    $tableauUsers = [];
-    $tableauUsers['users'] = [];
+    $tableauTransactions = [];
+    $tableauTransactions['transactions'] = [];
 
-    // On parcourt les users
+    // On parcourt les transactions
     while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
         extract($row);
 
@@ -57,11 +57,11 @@ if($stmt->rowCount() > 0){
             "password" => $password
         ];
 
-        $tableauUsers['users'][] = $us;
+        $tableauTransactions['transaction'][] = $us;
     }
     // On envoie le code réponse 200 OK
     http_response_code(200);
 
     // On encode en json et on envoie
-    echo json_encode($tableauUsers);
+    echo json_encode($tableauTransactions);
 }

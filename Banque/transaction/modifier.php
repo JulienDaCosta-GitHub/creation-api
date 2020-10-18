@@ -20,28 +20,29 @@ if($_SERVER['REQUEST_METHOD'] == 'PUT'){
     // La bonne méthode est utilisée
 
     include_once '../../config/Database.php';
-include_once '../../models/User.php';
+include_once '../../models/Transaction.php';
 
 // On instancie la base de données
 $database = new Database();
 $db = $database->getConnection();
 
 // On instancie les produits
-$user = new User($db);
+$transaction = new Transaction($db);
 
 // On récupère les données reçues
 $donnees = json_decode(file_get_contents("php://input"));
 
 // On vérifie qu'on a bien toutes les données
-if(!empty($donnees->id) && !empty($donnees->nom) && !empty($donnees->prenom) && !empty($donnees->email) && !empty($donnees->password)){
+if(!empty($donnees->date) && !empty($donnees->montant) && !empty($donnees->valide) && !empty($donnees->moyenPaiement) && !empty($donnees->compte_id)){
 // On hydrate notre objet
-$user->id = $donnees->id;
-$user->nom = $donnees->nom;
-$user->prenom = $donnees->prenom;
-$user->email = $donnees->email;
-$user->password = $donnees->password;
+$transaction->id = $donnees->id;
+$transaction->date = $donnees->date;
+$transaction->montant = $donnees->montant;
+$transaction->valide = $donnees->valide;
+$transaction->moyenPaiement = $donnees->moyenPaiement;
+$transaction->compte_id = $donnees->compte_id;
 
-if($user->modifier()){
+if($transaction->modifier()){
     // Ici la modification a fonctionné
     // On envoie un code 200
     http_response_code(200);

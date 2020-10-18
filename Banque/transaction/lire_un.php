@@ -27,31 +27,33 @@ if($_SERVER['REQUEST_METHOD'] == 'GET'){
 
 // On inclut les fichiers de configuration et d'accès aux données
 include_once '../../config/Database.php';
-include_once '../../models/User.php';
+include_once '../../models/Transaction.php';
 
 // On instancie la base de données
 $database = new Database();
 $db = $database->getConnection();
 
 // On instancie les users
-$user = new User($db);
+$user = new Transaction($db);
 
 $donnees = json_decode(file_get_contents("php://input"));
 
     if(!empty($donnees->id)){
-        $user->id = $donnees->id;
+        $transaction->id = $donnees->id;
 
         // On récupère le user
-        $user->lireUn();
+        $transaction->lireUn();
 
         // On vérifie si le user existe
-        if($user->nom != null){
+        if($transaction->date != null){
 
             $ustab = [
-                "id" => $user->id,
-                "nom" => $user->nom,
-                "email" => $user->email,
-                "password" => $user->password
+                "id" => $transaction->id,
+                "date" => $transaction->date,
+                "montant" => $transaction->montant,
+                "valide" => $transaction->valide,
+                "moyenPaiement" => $transaction->moyenPaiement,
+                "compte_id" => $transaction->compte_id,
             ];
             // On envoie le code réponse 200 OK
             http_response_code(200);
@@ -62,6 +64,6 @@ $donnees = json_decode(file_get_contents("php://input"));
             // 404 Not found
             http_response_code(404);
          
-            echo json_encode(array("message" => "L'user' n'existe pas."));
+            echo json_encode(array("message" => "La transaction' n'existe pas."));
         }
     }
