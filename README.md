@@ -1,6 +1,6 @@
 # Projet : creation-api
 
-Groupe: Kevin Zhang, Alexandre Duval, Julien Da Costa, Xavier Lami, Axel Guillon, Mael Bourdeleix.
+Groupe: Kevin Zhang, Alexandre Duval, Julien Da Costa, Xavier Lami, Axel Guillon, Mael Bourdeleix, Louis Bouvier.
 
 # Utilisation de l'API - Exemples
 
