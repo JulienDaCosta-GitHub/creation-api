@@ -17,9 +17,9 @@ Supprimer un élément de la BDD : http://localhost/creation-api/banque/user/sup
 Modifier un élément de la BDD : http://localhost/creation-api/banque/user/modifier.php en PUT.
 
 
+
 Les valeurs sont à entrer en raw JSON sur Postman dans l'onglet body.
 
 Nous pouvons remplacer "user" par "cb", "compte", "transaction" ou "client" en fonction de la table que l'on souhaite modifier.
 
 Nous pouvons remplacer "banque" par "externe" en fonction du rôle que l'on souhaite avoir.
-
