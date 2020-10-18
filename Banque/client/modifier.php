@@ -20,28 +20,28 @@ if($_SERVER['REQUEST_METHOD'] == 'PUT'){
     // La bonne méthode est utilisée
 
     include_once '../../config/Database.php';
-include_once '../../models/User.php';
+include_once '../../models/Client.php';
 
 // On instancie la base de données
 $database = new Database();
 $db = $database->getConnection();
 
 // On instancie les produits
-$user = new User($db);
+$client = new Client($db);
 
 // On récupère les données reçues
 $donnees = json_decode(file_get_contents("php://input"));
 
 // On vérifie qu'on a bien toutes les données
-if(!empty($donnees->id) && !empty($donnees->nom) && !empty($donnees->prenom) && !empty($donnees->email) && !empty($donnees->password)){
+if(!empty($donnees->id) && !empty($donnees->username) && !empty($donnees->password) && !empty($donnees->role) && !empty($donnees->apiKey)){
 // On hydrate notre objet
-$user->id = $donnees->id;
-$user->nom = $donnees->nom;
-$user->prenom = $donnees->prenom;
-$user->email = $donnees->email;
-$user->password = $donnees->password;
+$client->id = $donnees->id;
+$client->username = $donnees->username;
+$client->password = $donnees->password;
+$client->role = $donnees->role;
+$client->apiKey = $donnees->apiKey;
 
-if($user->modifier()){
+if($client->modifier()){
     // Ici la modification a fonctionné
     // On envoie un code 200
     http_response_code(200);

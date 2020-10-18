@@ -27,23 +27,23 @@ if($_SERVER['REQUEST_METHOD'] == 'DELETE'){
 
 // On inclut les fichiers de configuration et d'accès aux données
 include_once '../../config/Database.php';
-include_once '../../models/User.php';
+include_once '../../models/Client.php';
 
 // On instancie la base de données
 $database = new Database();
 $db = $database->getConnection();
 
 // On instancie les users
-$user = new User($db);
+$client = new Client($db);
 
 // On récupère les données reçues
 $donnees = json_decode(file_get_contents("php://input"));
 
 // On vérifie qu'on a bien toutes les données
 if(!empty($donnees->id)){
-    $user->id = $donnees->id;
+    $client->id = $donnees->id;
 
-if($user->supprimer()){
+if($client->supprimer()){
     // Ici la suppression a fonctionné
     // On envoie un code 200
     http_response_code(200);

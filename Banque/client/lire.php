@@ -27,41 +27,41 @@ if($_SERVER['REQUEST_METHOD'] == 'GET'){
 
 // On inclut les fichiers de configuration et d'accès aux données
 include_once '../../config/Database.php';
-include_once '../../models/User.php';
+include_once '../../models/Client.php';
 
 // On instancie la base de données
 $database = new Database();
 $db = $database->getConnection();
 
-// On instancie les users
-$user = new User($db);
+// On instancie les clients
+$client = new Client($db);
 
 // On récupère les données
-$stmt = $user->lire();
+$stmt = $client->lire();
 
-// On vérifie si on a au moins 1 user
+// On vérifie si on a au moins 1 client
 if($stmt->rowCount() > 0){
     // On initialise un tableau associatif
-    $tableauUsers = [];
-    $tableauUsers['users'] = [];
+    $tableauClients = [];
+    $tableauClients['clients'] = [];
 
-    // On parcourt les users
+    // On parcourt les clients
     while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
         extract($row);
 
-        $us = [
+        $clientstab = [
             "id" => $id,
-            "nom" => $nom,
-            "prenom" => $prenom,
-            "email" => $email,
-            "password" => $password
+            "username" => $username,
+            "password" => $password,
+            "role" => $role,
+            "apiKey" => $apiKey
         ];
 
-        $tableauUsers['users'][] = $us;
+        $tableauClients['clients'][] = $us;
     }
     // On envoie le code réponse 200 OK
     http_response_code(200);
 
     // On encode en json et on envoie
-    echo json_encode($tableauUsers);
+    echo json_encode($tableauClients);
 }
