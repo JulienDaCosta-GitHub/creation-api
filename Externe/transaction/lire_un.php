@@ -19,13 +19,7 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 if($_SERVER['REQUEST_METHOD'] == 'GET'){
     // La bonne méthode est utilisée
 
-}else{
-    // Mauvaise méthode, on gère l'erreur
-    http_response_code(405);
-    echo json_encode(["message" => "La méthode n'est pas autorisée"]);
-}
-
-// On inclut les fichiers de configuration et d'accès aux données
+    // On inclut les fichiers de configuration et d'accès aux données
 include_once '../../config/Database.php';
 include_once '../../models/Transaction.php';
 
@@ -64,6 +58,12 @@ $donnees = json_decode(file_get_contents("php://input"));
             // 404 Not found
             http_response_code(404);
          
-            echo json_encode(array("message" => "La transaction' n'existe pas."));
+            echo json_encode(array("message" => "La transaction n'existe pas."));
         }
     }
+
+}else{
+    // Mauvaise méthode, on gère l'erreur
+    http_response_code(405);
+    echo json_encode(["message" => "La méthode n'est pas autorisée"]);
+}
