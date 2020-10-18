@@ -62,6 +62,6 @@ $donnees = json_decode(file_get_contents("php://input"));
             // 404 Not found
             http_response_code(404);
          
-            echo json_encode(array("message" => "L'user' n'existe pas."));
+            echo json_encode(array("message" => "L'user n'existe pas."));
         }
     }
