@@ -34,19 +34,16 @@ $database = new Database();
 $db = $database->getConnection();
 
 // On instancie les users
-$user = new User($db);
+$cb = new Cb($db);
 
 // On récupère les données reçues
 $donnees = json_decode(file_get_contents("php://input"));
 
 // On vérifie qu'on a bien toutes les données
 if(!empty($donnees->id)){
+    $cb->id = $donnees->id;
 
-}
-
-$user->id = $donnees->id;
-
-if($user->supprimer()){
+if($cb->supprimer()){
     // Ici la suppression a fonctionné
     // On envoie un code 200
     http_response_code(200);
@@ -56,4 +53,6 @@ if($user->supprimer()){
     // On envoie un code 503
     http_response_code(503);
     echo json_encode(["message" => "La suppression n'a pas été effectuée"]);         
+}
+
 }

@@ -26,22 +26,25 @@ include_once '../../models/User.php';
 $database = new Database();
 $db = $database->getConnection();
 
-// On instancie les produits
-$user = new User($db);
+// On instancie les cb
+$cb = new Cb($db);
 
 // On récupère les données reçues
 $donnees = json_decode(file_get_contents("php://input"));
 
 // On vérifie qu'on a bien toutes les données
-if(!empty($donnees->id) && !empty($donnees->nom) && !empty($donnees->prenom) && !empty($donnees->email) && !empty($donnees->password)){
+if(!empty($donnees->id) && !empty($donnees->uuid) && !empty($donnees->exp) && !empty($donnees->cryptogramme) && !empty($donnees->code) && !empty($donnees->active) && !empty($donnees->user_id) && !empty($donnees->compte_id)){
 // On hydrate notre objet
-$user->id = $donnees->id;
-$user->nom = $donnees->nom;
-$user->prenom = $donnees->prenom;
-$user->email = $donnees->email;
-$user->password = $donnees->password;
+$cb->id = $donnees->id;
+$cb->uuid = $donnees->uuid;
+$cb->exp = $donnees->exp;
+$cb->cryptogramme = $donnees->cryptogramme;
+$cb->code = $donnees->code;
+$cb->active = $donnees->active;
+$cb->user_id = $donnees->user_id;
+$cb->compte_id = $donnees->compte_id;
 
-if($user->modifier()){
+if($cb->modifier()){
     // Ici la modification a fonctionné
     // On envoie un code 200
     http_response_code(200);

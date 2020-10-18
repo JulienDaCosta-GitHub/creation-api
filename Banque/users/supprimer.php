@@ -41,10 +41,7 @@ $donnees = json_decode(file_get_contents("php://input"));
 
 // On vérifie qu'on a bien toutes les données
 if(!empty($donnees->id)){
-
-}
-
-$user->id = $donnees->id;
+    $user->id = $donnees->id;
 
 if($user->supprimer()){
     // Ici la suppression a fonctionné
@@ -56,4 +53,6 @@ if($user->supprimer()){
     // On envoie un code 503
     http_response_code(503);
     echo json_encode(["message" => "La suppression n'a pas été effectuée"]);         
+}
+
 }

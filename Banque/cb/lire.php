@@ -34,34 +34,37 @@ $database = new Database();
 $db = $database->getConnection();
 
 // On instancie les users
-$user = new User($db);
+$cb = new Cb($db);
 
 // On récupère les données
-$stmt = $user->lire();
+$stmt = $cb->lire();
 
-// On vérifie si on a au moins 1 user
+// On vérifie si on a au moins 1 cb
 if($stmt->rowCount() > 0){
     // On initialise un tableau associatif
-    $tableauUsers = [];
-    $tableauUsers['users'] = [];
+    $tableauCb = [];
+    $tableauCb['cb'] = [];
 
     // On parcourt les users
     while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
         extract($row);
 
-        $us = [
+        $cbtab = [
             "id" => $id,
-            "nom" => $nom,
-            "prenom" => $prenom,
-            "email" => $email,
-            "password" => $password
+            "uuid" => $uuid,
+            "exp" => $exp,
+            "cryptogramme" => $cryptogramme,
+            "code" => $code,
+            "active" => $active,
+            "user_id" => $user_id,
+            "compte_id" => $compte_id
         ];
 
-        $tableauUsers['users'][] = $us;
+        $tableauCb['cb'][] = $cbtab;
     }
     // On envoie le code réponse 200 OK
     http_response_code(200);
 
     // On encode en json et on envoie
-    echo json_encode($tableauUsers);
+    echo json_encode($tableauCb);
 }
