@@ -40,6 +40,7 @@ public function creer(){
     $this->montant=htmlspecialchars(strip_tags($this->montant));
     $this->valide=htmlspecialchars(strip_tags($this->valide));
     $this->moyenPaiement=htmlspecialchars(strip_tags($this->moyenPaiement));
+    $this->compte_id=htmlspecialchars(strip_tags($this->compte_id));
 
     // Ajout des données protégées
     $query->bindParam(":date", $this->date);
@@ -81,7 +82,7 @@ public function lire(){
  */
 public function lireUn(){
      // On écrit la requête
-     $sql = "SELECT date, montant, valide, moyenPaiement, compte_id";
+     $sql = "SELECT date, montant, valide, moyenPaiement, compte_id FROM " . $this->table . " WHERE id = ? LIMIT 0,1";
 
      // On prépare la requête
      $query = $this->connexion->prepare( $sql );
@@ -110,7 +111,7 @@ public function lireUn(){
  */
 public function modifier(){
     // On écrit la requête
-    $sql = "UPDATE " . $this->table . " SET date = :date, montant = :montant, valide = :valide, moyenPaiement = :moyenPaiement, compte_id = :compte_id";
+    $sql = "UPDATE " . $this->table . " SET date = :date, montant = :montant, valide = :valide, moyenPaiement = :moyenPaiement, compte_id = :compte_id WHERE id = :id";
     
     // On prépare la requête
     $query = $this->connexion->prepare($sql);

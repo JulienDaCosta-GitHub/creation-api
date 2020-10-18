@@ -39,7 +39,7 @@ $cb = new Cb($db);
 // On récupère les données
 $stmt = $cb->lire();
 
-// On vérifie si on a au moins 1 cb
+// On vérifie si on a au moins 1 user
 if($stmt->rowCount() > 0){
     // On initialise un tableau associatif
     $tableauCb = [];

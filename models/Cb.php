@@ -3,7 +3,7 @@
 class Cb{
     // Connexion
     private $connexion;
-    private $table = "user"; // Table dans la base de données
+    private $table = "cb"; // Table dans la base de données
 
     // Users
     public $id;
@@ -11,6 +11,9 @@ class Cb{
     public $exp;
     public $cryptogramme;
     public $code;
+    public $active;
+    public $user_id;
+    public $compte_id;
 
     /**
      * Constructeur avec $db pour la connexion à la base de données

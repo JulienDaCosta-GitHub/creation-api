@@ -33,11 +33,11 @@ $compte = new Compte($db);
 $donnees = json_decode(file_get_contents("php://input"));
 
 // On vérifie qu'on a bien toutes les données
-if(!empty($donnees->id) && !empty($donnees->user_id) && !empty($donnees->fond) && !empty($donnees->type) && !empty($donnees->actif)){
+if(!empty($donnees->id) && !empty($donnees->user_id) && !empty($donnees->fonds) && !empty($donnees->type) && !empty($donnees->actif)){
 // On hydrate notre objet
 $compte->id = $donnees->id;
 $compte->user_id = $donnees->user_id;
-$compte->fond = $donnees->fond;
+$compte->fonds = $donnees->fonds;
 $compte->type = $donnees->type;
 $compte->actif = $donnees->actif;
 

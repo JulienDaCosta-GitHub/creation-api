@@ -58,7 +58,7 @@ if($stmt->rowCount() > 0){
             "compte_id" => $compte_id
         ];
 
-        $tableauTransactions['transaction'][] = $tt;
+        $tableauTransactions['transactions'][] = $tt;
     }
     // On envoie le code réponse 200 OK
     http_response_code(200);

@@ -34,27 +34,28 @@ $database = new Database();
 $db = $database->getConnection();
 
 // On instancie les users
-$user = new User($db);
+$cb = new Cb($db);
 
 $donnees = json_decode(file_get_contents("php://input"));
 
     if(!empty($donnees->id)){
-        $cb->id = $donnees->cb;
+        $cb->id = $donnees->id;
 
         // On récupère le user
         $cb->lireUn();
 
-        // On vérifie si le user existe
+        // On vérifie si la cb existe
         if($cb->uuid != null){
 
             $ctab = [
-                "uuid" => $user->id,
-                "exp" => $user->nom,
-                "cryptogramme" => $user->email,
-                "code" => $user->password,
-                "active" => $user->password,
-                "user_id" => $user->password,
-                "compte_id" => $user->password,
+                "id" => $cb->id,
+                "uuid" => $cb->uuid,
+                "exp" => $cb->exp,
+                "cryptogramme" => $cb->cryptogramme,
+                "code" => $cb->code,
+                "active" => $cb->active,
+                "user_id" => $cb->user_id,
+                "compte_id" => $cb->compte_id,
             ];
             // On envoie le code réponse 200 OK
             http_response_code(200);
@@ -65,6 +66,6 @@ $donnees = json_decode(file_get_contents("php://input"));
             // 404 Not found
             http_response_code(404);
          
-            echo json_encode(array("message" => "L'user' n'existe pas."));
+            echo json_encode(array("message" => "La cb n'existe pas."));
         }
     }

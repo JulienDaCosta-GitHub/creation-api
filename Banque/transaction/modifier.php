@@ -33,7 +33,7 @@ $transaction = new Transaction($db);
 $donnees = json_decode(file_get_contents("php://input"));
 
 // On vérifie qu'on a bien toutes les données
-if(!empty($donnees->date) && !empty($donnees->montant) && !empty($donnees->valide) && !empty($donnees->moyenPaiement) && !empty($donnees->compte_id)){
+if(!empty($donnees->id) && !empty($donnees->date) && !empty($donnees->montant) && !empty($donnees->valide) && !empty($donnees->moyenPaiement) && !empty($donnees->compte_id)){
 // On hydrate notre objet
 $transaction->id = $donnees->id;
 $transaction->date = $donnees->date;

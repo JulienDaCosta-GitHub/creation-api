@@ -34,7 +34,7 @@ $database = new Database();
 $db = $database->getConnection();
 
 // On instancie les users
-$user = new Transaction($db);
+$transaction = new Transaction($db);
 
 $donnees = json_decode(file_get_contents("php://input"));
 
@@ -45,7 +45,7 @@ $donnees = json_decode(file_get_contents("php://input"));
         $transaction->lireUn();
 
         // On vérifie si le user existe
-        if($transaction->date != null){
+        if($transaction->compte_id != null){
 
             $tt = [
                 "id" => $transaction->id,

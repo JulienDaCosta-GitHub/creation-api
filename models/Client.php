@@ -44,7 +44,7 @@ public function creer(){
     $query->bindParam(":username", $this->username);
     $query->bindParam(":password", $this->password);
     $query->bindParam(":role", $this->role);
-    $query->bindParam(":password", $this->password);
+    $query->bindParam(":apiKey", $this->apiKey);
 
     // Exécution de la requête
     if($query->execute()){
@@ -79,7 +79,7 @@ public function lire(){
  */
 public function lireUn(){
      // On écrit la requête
-     $sql = "SELECT username, password, role, apiKey FROM " . $this->table . " WHERE id = ? LIMIT 0,1";
+     $sql = "SELECT * FROM " . $this->table . " WHERE id = ? LIMIT 0,1";
 
      // On prépare la requête
      $query = $this->connexion->prepare( $sql );
@@ -94,9 +94,9 @@ public function lireUn(){
      $row = $query->fetch(PDO::FETCH_ASSOC);
  
      // On hydrate l'objet
-     $this->nom = $row['username'];
-     $this->prenom = $row['password'];
-     $this->email = $row['role'];
+     $this->username = $row['username'];
+     $this->password= $row['password'];
+     $this->role = $row['role'];
      $this->apiKey = $row['apiKey'];
 }
 

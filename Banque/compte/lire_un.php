@@ -45,13 +45,13 @@ $donnees = json_decode(file_get_contents("php://input"));
         $compte->lireUn();
 
         // On vérifie si le compte existe
-        if($compte->compte_is!= null){
+        if($compte->user_id!= null){
 
             $us = [
-                "id" => $user->id,
-                "user_is" => $user->user_is,
-                "type" => $user->type,
-                "actif" => $user->actif
+                "id" => $compte->id,
+                "user_id" => $compte->user_id,
+                "type" => $compte->type,
+                "actif" => $compte->actif
             ];
             // On envoie le code réponse 200 OK
             http_response_code(200);

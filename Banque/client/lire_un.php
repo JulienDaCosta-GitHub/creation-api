@@ -48,11 +48,11 @@ $donnees = json_decode(file_get_contents("php://input"));
         if($client->username != null){
 
             $clitab = [
-                "id" => $user->id,
-                "username" => $user->username,
-                "password" => $user->password,
-                "role" => $user->role,
-                "apiKey" => $user->role
+                "id" => $client->id,
+                "username" => $client->username,
+                "password" => $client->password,
+                "role" => $client->role,
+                "apiKey" => $client->apiKey
             ];
             // On envoie le code réponse 200 OK
             http_response_code(200);

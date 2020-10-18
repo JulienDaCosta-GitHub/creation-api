@@ -57,7 +57,7 @@ if($stmt->rowCount() > 0){
             "apiKey" => $apiKey
         ];
 
-        $tableauClients['clients'][] = $us;
+        $tableauClients['clients'][] = $clientstab;
     }
     // On envoie le code réponse 200 OK
     http_response_code(200);
