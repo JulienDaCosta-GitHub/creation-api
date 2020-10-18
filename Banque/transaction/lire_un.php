@@ -47,7 +47,7 @@ $donnees = json_decode(file_get_contents("php://input"));
         // On vérifie si le user existe
         if($transaction->date != null){
 
-            $ustab = [
+            $tt = [
                 "id" => $transaction->id,
                 "date" => $transaction->date,
                 "montant" => $transaction->montant,
@@ -59,7 +59,7 @@ $donnees = json_decode(file_get_contents("php://input"));
             http_response_code(200);
 
             // On encode en json et on envoie
-            echo json_encode($ustab);
+            echo json_encode($tt);
         }else{
             // 404 Not found
             http_response_code(404);

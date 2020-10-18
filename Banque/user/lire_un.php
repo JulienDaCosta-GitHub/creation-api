@@ -47,7 +47,7 @@ $donnees = json_decode(file_get_contents("php://input"));
         // On vérifie si le user existe
         if($user->nom != null){
 
-            $ustab = [
+            $us = [
                 "id" => $user->id,
                 "nom" => $user->nom,
                 "email" => $user->email,
@@ -57,7 +57,7 @@ $donnees = json_decode(file_get_contents("php://input"));
             http_response_code(200);
 
             // On encode en json et on envoie
-            echo json_encode($ustab);
+            echo json_encode($us);
         }else{
             // 404 Not found
             http_response_code(404);

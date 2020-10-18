@@ -49,15 +49,16 @@ if($stmt->rowCount() > 0){
     while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
         extract($row);
 
-        $us = [
+        $tt = [
             "id" => $id,
-            "nom" => $nom,
-            "prenom" => $prenom,
-            "email" => $email,
-            "password" => $password
+            "date" => $date,
+            "montant" => $montant,
+            "valide" => $valide,
+            "moyenPaiement" => $moyenPaiement,
+            "compte_id" => $compte_id
         ];
 
-        $tableauTransactions['transaction'][] = $us;
+        $tableauTransactions['transaction'][] = $tt;
     }
     // On envoie le code réponse 200 OK
     http_response_code(200);
