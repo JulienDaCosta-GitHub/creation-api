@@ -19,13 +19,7 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 if($_SERVER['REQUEST_METHOD'] == 'DELETE'){
     // La bonne méthode est utilisée
 
-}else{
-    // Mauvaise méthode, on gère l'erreur
-    http_response_code(405);
-    echo json_encode(["message" => "La méthode n'est pas autorisée"]);
-}
-
-// On inclut les fichiers de configuration et d'accès aux données
+    // On inclut les fichiers de configuration et d'accès aux données
 include_once '../../config/Database.php';
 include_once '../../models/Compte.php';
 
@@ -55,4 +49,10 @@ if($compte->supprimer()){
     echo json_encode(["message" => "La suppression n'a pas été effectuée"]);         
 }
 
+}
+
+}else{
+    // Mauvaise méthode, on gère l'erreur
+    http_response_code(405);
+    echo json_encode(["message" => "La méthode n'est pas autorisée"]);
 }
