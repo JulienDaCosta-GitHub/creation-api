@@ -27,7 +27,7 @@ include_once '../../models/Cb.php';
 $database = new Database();
 $db = $database->getConnection();
 
-// On instancie les users
+// On instancie les cb
 $cb = new Cb($db);
 
 $donnees = json_decode(file_get_contents("php://input"));
@@ -35,7 +35,7 @@ $donnees = json_decode(file_get_contents("php://input"));
     if(!empty($donnees->id)){
         $cb->id = $donnees->id;
 
-        // On récupère le user
+        // On récupère la cb
         $cb->lireUn();
 
         // On vérifie si la cb existe
